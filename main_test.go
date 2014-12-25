@@ -13,81 +13,81 @@ func init() {
 	initDb()
 }
 
-func TestGetActors(t *testing.T) {
+func TestGetCustomers(t *testing.T) {
 	request, _ := http.NewRequest("GET", "/", nil)
 	response := httptest.NewRecorder()
 
-	GetActors(response, request)
+	GetCustomers(response, request)
 
 	if response.Code != http.StatusOK {
 		t.Fatalf("Response body received is not ok")
 	}
 }
 
-func TestNewActor(t *testing.T) {
-	actor := Actor{Id: 1, Name: "Shagrath", Age: 50}
+func TestNewCustomer(t *testing.T) {
+	customer := Customer{Id: 1, Name: "Shagrath", Age: 50}
 
-	data, err := json.Marshal(actor)
+	data, err := json.Marshal(customer)
 	if err != nil {
-		t.Fatalf("Error marshaling actor")
+		t.Fatalf("Error marshaling customer")
 	}
 
-	request, _ := http.NewRequest("POST", "/actors", bytes.NewReader(data))
+	request, _ := http.NewRequest("POST", "/customers", bytes.NewReader(data))
 	response := httptest.NewRecorder()
 
-	NewActor(response, request)
+	NewCustomer(response, request)
 
 	if response.Code != http.StatusCreated {
 		t.Fatalf("Error")
 	}
 }
 
-func TestGetActor(t *testing.T) {
+func TestGetCustomer(t *testing.T) {
 	params := map[string]string{
 		"id": "1",
 	}
-	request, _ := http.NewRequest("GET", "/actors/"+params["id"], nil)
+	request, _ := http.NewRequest("GET", "/customers/"+params["id"], nil)
 	response := httptest.NewRecorder()
 	context := web.C{URLParams: params}
 
-	GetActor(context, response, request)
+	GetCustomer(context, response, request)
 
 	if response.Code != http.StatusOK {
 		t.Fatalf("Error")
 	}
 }
 
-func TestUpdateActor(t *testing.T) {
+func TestUpdateCustomer(t *testing.T) {
 	params := map[string]string{
 		"id": "1",
 	}
-	actor := Actor{Name: "Dek", Age: 30}
+	customer := Customer{Name: "Dek", Age: 30}
 
-	data, err := json.Marshal(actor)
+	data, err := json.Marshal(customer)
 	if err != nil {
-		t.Fatalf("Error marshaling actor")
+		t.Fatalf("Error marshaling customer")
 	}
 
-	request, _ := http.NewRequest("PUT", "/actors/"+params["id"], bytes.NewReader(data))
+	request, _ := http.NewRequest("PUT", "/customers/"+params["id"], bytes.NewReader(data))
 	response := httptest.NewRecorder()
 	context := web.C{URLParams: params}
 
-	UpdateActor(context, response, request)
+	UpdateCustomer(context, response, request)
 
 	if response.Code != http.StatusNoContent {
 		t.Fatalf("Error")
 	}
 }
 
-func TestDeleteActor(t *testing.T) {
+func TestDeleteCustomer(t *testing.T) {
 	params := map[string]string{
 		"id": "1",
 	}
-	request, _ := http.NewRequest("DELETE", "/actors/"+params["id"], nil)
+	request, _ := http.NewRequest("DELETE", "/customers/"+params["id"], nil)
 	response := httptest.NewRecorder()
 	context := web.C{URLParams: params}
 
-	DeleteActor(context, response, request)
+	DeleteCustomer(context, response, request)
 
 	if response.Code != http.StatusNoContent {
 		t.Fatalf("Error")

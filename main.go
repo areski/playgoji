@@ -122,6 +122,7 @@ func initDb() {
 }
 
 func main() {
+	goji.Use(ContentTypeJson)
 	goji.Get("/", GetCustomers)
 	goji.Get("/customers/:id", GetCustomer)
 	goji.Post("/customers", NewCustomer)
